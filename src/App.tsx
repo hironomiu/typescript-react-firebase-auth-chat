@@ -1,7 +1,7 @@
 import { useEffect, useState, VFC } from 'react'
 import { onAuthStateChangedCheck } from './firebase'
-import Login from './components/Login'
-import Main from './components/Main'
+import Layout from './components/Layout'
+import { BrowserRouter } from 'react-router-dom'
 
 const App: VFC = () => {
   const [user, setUser] = useState({ email: '', displayName: '' })
@@ -16,11 +16,14 @@ const App: VFC = () => {
 
   return (
     <div>
-      {isLogin ? (
-        <Main setUser={setUser} setIsLogin={setIsLogin} user={user} />
-      ) : (
-        <Login setIsLogin={setIsLogin} />
-      )}
+      <BrowserRouter>
+        <Layout
+          setUser={setUser}
+          setIsLogin={setIsLogin}
+          user={user}
+          isLogin={isLogin}
+        />
+      </BrowserRouter>
     </div>
   )
 }

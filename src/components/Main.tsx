@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect, memo } from 'react'
 import { firebaseSignOut, pushContent, messagesRef } from '../firebase'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   user: { email: string; displayName: string }
 }
 
-const Main: FC<Props> = (props) => {
+const Main: FC<Props> = memo((props) => {
   const [message, setMessage] = useState({
     name: props.user.displayName,
     text: '',
@@ -24,6 +24,10 @@ const Main: FC<Props> = (props) => {
     if (e.target.value) {
       setMessage((p) => (p = { ...message, text: e.target.value }))
     }
+  }
+
+  const signOut = () => {
+    firebaseSignOut(props.setUser, props.setIsLogin)
   }
 
   useEffect(() => {
@@ -53,10 +57,6 @@ const Main: FC<Props> = (props) => {
     })
   }, [])
 
-  const signOut = () => {
-    firebaseSignOut(props.setUser, props.setIsLogin)
-  }
-
   if (status === 'loading') return <div>loading</div>
 
   return (
@@ -85,6 +85,6 @@ const Main: FC<Props> = (props) => {
       </div>
     </div>
   )
-}
+})
 
 export default Main
