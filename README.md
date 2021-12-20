@@ -20,6 +20,12 @@ yarn create react-app --template typescript
 yarn add firebase @types/firebase
 ```
 
+### react-router-dom
+
+```
+yarn add react-router-dom @types/react-router-dom
+```
+
 ### GitHub
 
 アカウント -> Settings -> Developer settings -> OAuth Apps -> New OAuth App

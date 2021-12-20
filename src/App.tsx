@@ -1,6 +1,6 @@
 import { useEffect, useState, VFC } from 'react'
 import { onAuthStateChangedCheck } from './firebase'
-import Layout from './components/Layout'
+import { Layout } from './components/Layout'
 import { BrowserRouter } from 'react-router-dom'
 
 const App: VFC = () => {

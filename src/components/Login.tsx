@@ -5,7 +5,7 @@ type Props = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Login: FC<Props> = memo((props) => {
+export const Login: FC<Props> = memo((props) => {
   const signIn = async (provider: GithubProvider) => {
     const res = await socialMediaAuth(provider)
     if (res?.displayName) {
@@ -19,5 +19,3 @@ const Login: FC<Props> = memo((props) => {
     </div>
   )
 })
-
-export default Login

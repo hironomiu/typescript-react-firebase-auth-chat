@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, memo } from 'react'
-import { firebaseSignOut, pushContent, messagesRef } from '../firebase'
+import { pushContent, messagesRef } from '../firebase'
 
 type Props = {
   setUser: React.Dispatch<
@@ -10,9 +10,10 @@ type Props = {
   >
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>
   user: { email: string; displayName: string }
+  isLogin: boolean
 }
 
-const Main: FC<Props> = memo((props) => {
+export const Main: FC<Props> = memo((props) => {
   const [message, setMessage] = useState({
     name: props.user.displayName,
     text: '',
@@ -26,42 +27,39 @@ const Main: FC<Props> = memo((props) => {
     }
   }
 
-  const signOut = () => {
-    firebaseSignOut(props.setUser, props.setIsLogin)
-  }
-
   useEffect(() => {
-    setStatus('loading')
-    messagesRef.on('value', (snapshot) => {
-      const messages = snapshot.val()
+    if (props.isLogin) {
+      setStatus('loading')
+      messagesRef.on('value', (snapshot) => {
+        const messages = snapshot.val()
 
-      type Message = {
-        name: string
-        text: string
-      }
-      const entries: Array<[string, Message]> = Object.entries(messages)
+        type Message = {
+          name: string
+          text: string
+        }
+        const entries: Array<[string, Message]> = Object.entries(messages)
 
-      type NewMessage = {
-        key: string
-        name: string
-        text: string
-      }
+        type NewMessage = {
+          key: string
+          name: string
+          text: string
+        }
 
-      const newMessages: Array<NewMessage> = entries.map((data) => {
-        const [key, message] = data
+        const newMessages: Array<NewMessage> = entries.map((data) => {
+          const [key, message] = data
 
-        return { key, ...message }
+          return { key, ...message }
+        })
+        setMessages(newMessages)
+        setStatus('idle')
       })
-      setMessages(newMessages)
-      setStatus('idle')
-    })
-  }, [])
+    }
+  }, [props.isLogin])
 
   if (status === 'loading') return <div>loading</div>
 
   return (
     <div>
-      <button onClick={() => signOut()}>signOut</button>
       <div>
         {messages.map((message) => (
           <div key={message.key}>
@@ -86,5 +84,3 @@ const Main: FC<Props> = memo((props) => {
     </div>
   )
 })
-
-export default Main
