@@ -12,7 +12,7 @@ const App: VFC = () => {
     onAuthStateChangedCheck(setUser, setStatus, setIsLogin)
   }, [])
 
-  if (status === 'loading') return <div>loading</div>
+  if (status === 'loading') return <div>認証中</div>
 
   return (
     <div>

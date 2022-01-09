@@ -56,7 +56,7 @@ export const Main: FC<Props> = memo((props) => {
     }
   }, [props.isLogin])
 
-  if (status === 'loading') return <div>loading</div>
+  if (status === 'loading') return <div>チャットメッセージ取得中</div>
 
   return (
     <div>

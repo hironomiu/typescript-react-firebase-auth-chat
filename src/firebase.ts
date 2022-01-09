@@ -88,12 +88,13 @@ export const onAuthStateChangedCheck = (
       setIsLogin(true)
       // setMessage({ name: user.displayName, text: '' })
     }
+    console.log('idle')
     setStatus('idle')
   })
 }
 
 const database = firebase.database()
-export const messagesRef = database.ref('message')
+export const messagesRef = database.ref('messages')
 
 type Message = {
   name: string
